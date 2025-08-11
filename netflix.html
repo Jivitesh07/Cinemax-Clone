@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Netflix Style Landing Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+
+        .background {
+            background: url(http://isquad.tv/wp-content/uploads/2018/08/Netflix-Background-1260x709.jpg) no-repeat center center/cover;
+            height: 100vh;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        header {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            right: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            color: red;
+            font-weight: bold;
+        }
+
+        .sign-in {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .content {
+            position: absolute;
+            top: 30%;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .content h1 {
+            font-size: 3.7em;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 2.0em;
+            margin-bottom: 15px;
+        }
+
+        .sub {
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            max-width: 600px;
+            margin: auto;
+            flex-wrap: wrap;
+        }
+
+        input[type="email"] {
+            padding: 12px;
+            font-size: 1em;
+            width: 60%;
+            max-width: 400px;
+            border: none;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        section.tv-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            gap: 50px;
+        }
+
+        .image-content, .text-content {
+            flex: 1 1 500px;
+            text-align: center;
+        }
+
+        .image-content img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .text-content h1 {
+            font-size: 3em;
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        .text-content p {
+            font-size: 1.5em;
+            line-height: 1.5;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .clown {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index: 10;
+            width: 100px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* FAQ Section */
+        .faq-title {
+            font-size: 60px;
+            text-align: center;
+            margin-top: 60px;
+            color: white;
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px auto 80px;
+            width: 100%;
+        }
+
+        .faq {
+            background: rgba(128, 128, 128, 0.712);
+            margin: 10px 0;
+            padding: 15px 20px;
+            cursor: pointer;
+            border: none;
+            text-align: left;
+            width: 65%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 25px;
+            color: white;
+        }
+
+        .answer {
+            display: none;
+            background: #333;
+            color: white;
+            width: 65%;
+            margin-bottom: 10px;
+            padding: 15px 20px;
+        }
+
+        /* New styles for the sign-in modal */
+        #sign-in-form {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.85);
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 100;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        #sign-in-form h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        #sign-in-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            background: #333;
+            color: white;
+            font-size: 1em;
+        }
+
+        #sign-in-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        #sign-in-form button:hover {
+            background-color: #e50914;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 2.5em;
+            }
+            .text-content h1 {
+                font-size: 2em;
+            }
+            .text-content p {
+                font-size: 1.2em;
+            }
+            .faq {
+                font-size: 20px;
+                width: 90%;
+            }
+            .answer {
+                width: 90%;
+            }
+            #sign-in-form h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background">
+        <div class="overlay"></div>
+        <header>
+            <h1 class="logo">NETFLIX</h1>
+            <button class="sign-in" id="sign-in-button">Sign In</button>
+        </header>
+        <div class="content">
+            <h1>Unlimited movies, TV</h1>
+            <h1>shows, and more.</h1>
+            <p>Watch anywhere. Cancel anytime.</p>
+            <p class="sub">Ready to watch? Enter your email to create or restart your membership.</p>
+            <form>
+                <input type="email" placeholder="Email address" required />
+                <button type="submit">Get Started</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="tv-section">
+        <div class="text-content">
+            <h1>Enjoy on your TV</h1>
+            <p>Watch on Smart TV, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://thenextweb.com/wp-content/blogs.dir/1/files/2013/11/Netflix-Screenshot.jpeg" alt="TV showing Netflix">
+        </div>
+    </section>
+
+    <section class="tv-section">
+        <div class="image-content">
+            <img src="https://i.pinimg.com/originals/3c/c3/fa/3cc3fa6623cddda0e502bf43625486b1.jpg" alt="Netflix on mobile">
+        </div>
+        <div class="text-content">
+            <h1>Download your shows</h1>
+            <p>Save your favourites easily and always have something to watch offline.</p>
+        </div>
+    </section>
+
+    <section class="tv-section">
+        <div class="text-content">
+            <h1>Watch everywhere</h1>
+            <p>Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.</p>
+        </div>
+        <div class="image-content">
+            <img src="https://www.joyoshare.com/images/resource/netflix-pic.png" alt="Watch on any device">
+        </div>
+    </section>
+
+    <h1 class="faq-title">Frequently Asked Questions!</h1>
+    <div class="faq-container">
+        <button class="faq">What is Netflix?<span>+</span></button>
+        <div class="answer">Netflix is a streaming service that provides a large variety of TV shows, movies and many more.</div>
+
+        <button class="faq">How much does Netflix cost?<span>+</span></button>
+        <div class="answer">Netflix has several plans, ranging from basic to premium, with prices varying by region.</div>
+
+        <button class="faq">Where can I watch?<span>+</span></button>
+        <div class="answer">You can watch on smart TVs, game consoles, mobile devices, and more.</div>
+
+        <button class="faq">How do I cancel?<span>+</span></button>
+        <div class="answer">You can cancel the plans before payment of the desired plan taken.</div>
+
+        <button class="faq">What can I watch on Netflix?<span>+</span></button>
+        <div class="answer">Variety of TV shows, movies and unlimited entertainment sources are present here.</div>
+    </div>
+
+    <div id="sign-in-form">
+        <span class="close-btn" id="close-btn">&times;</span>
+        <h2>Sign In</h2>
+        <form>
+            <input type="email" placeholder="Email or phone number" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+
+    <script>
+        const faqs = document.querySelectorAll(".faq");
+        faqs.forEach(faq => {
+            faq.addEventListener("click", () => {
+                const answer = faq.nextElementSibling;
+                answer.style.display = answer.style.display === "block" ? "none" : "block";
+            });
+        });
+
+        // New JavaScript for sign-in button
+        const signInButton = document.getElementById("sign-in-button");
+        const signInForm = document.getElementById("sign-in-form");
+        const closeButton = document.getElementById("close-btn");
+
+        signInButton.addEventListener("click", () => {
+            signInForm.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", () => {
+            signInForm.style.display = "none";
+        });
+    </script>
+</body>
+</html>
